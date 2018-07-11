@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pruebas</title>
+</head>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD219p4x9hUr07GFL2vr26ODjXkzQd4i1g",
+    authDomain: "sisdist-fisi.firebaseapp.com",
+    databaseURL: "https://sisdist-fisi.firebaseio.com",
+    projectId: "sisdist-fisi",
+    storageBucket: "sisdist-fisi.appspot.com",
+    messagingSenderId: "104702906682"
+  };
+  firebase.initializeApp(config);
+</script>
+<body>
+	<button onclick="writeUserData();">Ingreso</button>
+  <button onclick="writeUserData();">Salida</button>
+	<div id="Palabras"></div>
+	<script>
+    let Cambios="";
+		var database = firebase.database();
+		var starCountRef = firebase.database().ref('Alumnos/');
+		function writeUserData() {
+ 		 firebase.database().ref('Alumnos/').set({
+    			username: "Liza"
+  			});
+		}
+		
+    //Este metodo se puede utilizar siempre 
+		starCountRef.on('value', function(snapshot) {
+			console.log("Se dectecto algo");
+        console.log(snapshot.val());
+        var email = (snapshot.val() && snapshot.val().email) || 'No hay correo';
+        Cambios+="email: "+email+" Nombre: "+snapshot.val().username+'<br>';
+  			document.getElementById("Palabras").innerHTML=Cambios;
+  		});
+	</script>
+
+</body>
+</html>
